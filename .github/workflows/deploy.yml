@@ -30,6 +30,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify Web3Forms secret
+        run: |
+          if [ -z "$VITE_WEB3FORMS_ACCESS_KEY" ]; then
+            echo "::error::Adicione o secret VITE_WEB3FORMS_ACCESS_KEY em Settings > Secrets and variables > Actions"
+            exit 1
+          fi
+        env:
+          VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
+
       - name: Build
         run: npm run build
         env:

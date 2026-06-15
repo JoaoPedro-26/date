@@ -38,7 +38,10 @@ export function formatSelectionsMessage(selections: DateSelections): string {
 
 async function sendEmail(message: string): Promise<boolean> {
   const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
-  if (!accessKey) return false
+  if (!accessKey) {
+    console.warn('[date] VITE_WEB3FORMS_ACCESS_KEY não configurada no build')
+    return false
+  }
 
   const response = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
@@ -46,11 +49,16 @@ async function sendEmail(message: string): Promise<boolean> {
     body: JSON.stringify({
       access_key: accessKey,
       subject: '💙 Alguém aceitou o date!',
+      from_name: 'Date App',
       message,
+      botcheck: '',
     }),
   })
 
   const data = await response.json()
+  if (!data.success) {
+    console.error('[date] Web3Forms erro:', data.message ?? data)
+  }
   return data.success === true
 }
 

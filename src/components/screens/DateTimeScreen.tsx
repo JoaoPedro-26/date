@@ -1,3 +1,4 @@
+import { CustomDatePicker, CustomTimePicker } from '../CustomDateTimePicker'
 import { Card } from '../Card'
 import { MobileLayout } from '../MobileLayout'
 import { PrimaryButton } from '../PrimaryButton'
@@ -27,28 +28,18 @@ export function DateTimeScreen({
           Quando você tá livre?
         </h1>
 
-        <div className="mb-4">
+        <div className="mb-5">
           <label className="mb-2 block text-xs font-semibold text-white/70">
             Escolhe a data
           </label>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => onDateChange(e.target.value)}
-            className="w-full rounded-full border-2 border-white/10 bg-[#2a1810] px-5 py-3.5 text-white outline-none focus:border-[#f05a3a]"
-          />
+          <CustomDatePicker value={date} onChange={onDateChange} />
         </div>
 
         <div className="mb-6">
           <label className="mb-2 block text-xs font-semibold text-white/70">
             Escolhe o horário
           </label>
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => onTimeChange(e.target.value)}
-            className="w-full rounded-full border-2 border-white/10 bg-[#2a1810] px-5 py-3.5 text-white outline-none focus:border-[#f05a3a]"
-          />
+          <CustomTimePicker value={time} onChange={onTimeChange} />
         </div>
 
         <PrimaryButton onClick={onNext} disabled={!isValid}>
